@@ -310,9 +310,8 @@ def test_torch_vs_onnx_short_audio(model_name, test_audio_suite):
 
     # For short audio, we expect reasonable match rate
     for r in results:
-        threshold = 2.0 if "v3" in model_name else 0.5
         assert r[
-            'miss_rate'] < threshold, f"Miss rate too high for {model_name}: {r['miss_rate']:.2f}%"
+            'miss_rate'] < 0.5, f"Miss rate too high for {model_name}: {r['miss_rate']:.2f}%"
 
     print(f"\n{model_name} Short Audio Summary:")
     print(f"  Successful tests: {len(successful_tests)}/{len(results)}")
@@ -366,9 +365,8 @@ def test_torch_vs_onnx_long_audio(model_name, test_audio_suite):
 
     for r in results:
         # NOTE(xcsong): 0.5% is a reasonable miss rate for long audio, since we drop the last overlap part.
-        threshold = 2.0 if "v3" in model_name else 0.5
         assert r[
-            'miss_rate'] < threshold, f"Miss rate too high for {model_name}: {r['miss_rate']}%"
+            'miss_rate'] < 0.5, f"Miss rate too high for {model_name}: {r['miss_rate']}%"
 
     # The main requirement is that Torch always works
     print("  ✅ Torch processing works reliably for all long audio")

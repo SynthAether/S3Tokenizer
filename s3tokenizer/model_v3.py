@@ -45,9 +45,9 @@ class MultiHeadAttentionV3(FSMNMultiHeadAttention):
                  kernel_size: int = 31,
                  use_sdpa: bool = False):
         super().__init__(n_state, n_head, kernel_size, use_sdpa)
-        # Override linears to be bias=True (default)
+        # Override linears: query/value/out use bias=True, key uses bias=False
         self.query = Linear(n_state, n_state)
-        self.key = Linear(n_state, n_state)
+        self.key = Linear(n_state, n_state, bias=False)
         self.value = Linear(n_state, n_state)
         self.out = Linear(n_state, n_state)
 
