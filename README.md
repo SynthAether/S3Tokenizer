@@ -21,6 +21,7 @@ This repository undertakes a reverse engineering of the S3Tokenizer, offering:
 - [x] Model: [S3Tokenizer V1 50hz](https://modelscope.cn/models/iic/CosyVoice-300M)
 - [x] Model: [S3Tokenizer V1 25hz](https://modelscope.cn/models/iic/CosyVoice-300M-25Hz)
 - [x] Model: [S3Tokenizer V2 25hz](https://modelscope.cn/models/iic/CosyVoice2-0.5B)
+- [x] Model: [S3Tokenizer V3 25hz](https://modelscope.cn/models/FunAudioLLM/Fun-CosyVoice3-0.5B-2512)
 
 
 # Setup
@@ -34,7 +35,7 @@ pip install s3tokenizer
 ```py
 import s3tokenizer
 
-tokenizer = s3tokenizer.load_model("speech_tokenizer_v1").cuda()  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz"
+tokenizer = s3tokenizer.load_model("speech_tokenizer_v1").cuda()  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz speech_tokenizer_v3_25hz"
 
 mels = []
 wav_paths = ["s3tokenizer/assets/BAC009S0764W0121.wav", "s3tokenizer/assets/BAC009S0764W0122.wav"]
@@ -57,7 +58,7 @@ s3tokenizer --wav_scp xxx.scp \
             --device "cpu" \
             --output_dir "./" \
             --batch_size 32 \
-            --model "speech_tokenizer_v1"  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz"
+            --model "speech_tokenizer_v1"  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz speech_tokenizer_v3_25hz"
 ```
 
 
@@ -75,7 +76,7 @@ torchrun --nproc_per_node=8 --nnodes=1 \
                 --device "cuda" \
                 --output_dir "./" \
                 --batch_size 32 \
-                --model "speech_tokenizer_v1"  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz"
+                --model "speech_tokenizer_v1"  # or "speech_tokenizer_v1_25hz speech_tokenizer_v2_25hz speech_tokenizer_v3_25hz"
 ```
 
 
