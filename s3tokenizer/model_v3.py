@@ -130,7 +130,7 @@ class AudioEncoderV3(torch.nn.Module):
         mask = make_non_pad_mask(x_len, x_slen).unsqueeze(1)
         x = torch.nn.functional.gelu(self.conv2(x * mask))
         x_len = (x_len + 2 - 1 * (3 - 1) - 1) // 2 + 1
-        x_slen = (x_slen + 2 - 1 * (3 - 1) - 1) // self.stride + 1
+        x_slen = (x_slen + 2 - 1 * (3 - 1) - 1) // 2 + 1
         mask = make_non_pad_mask(x_len, x_slen).unsqueeze(1)
         x = x.permute(0, 2, 1)  # (B, T // 2, n_state)
         freqs_cis = self.freqs_cis.to(x.device)
