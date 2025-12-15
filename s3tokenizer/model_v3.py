@@ -187,8 +187,7 @@ class S3TokenizerV3(torch.nn.Module):
         long_audio_mask = mel_len > max_frames
 
         if long_audio_mask.any():
-            return self._quantize_mixed_batch(mel, mel_len, long_audio_mask,
-                                              max_frames)
+            return self._quantize_mixed_batch(mel, mel_len, long_audio_mask)
         else:
             hidden, code_len = self.encoder(mel, mel_len)
             code = self.quantizer.encode(hidden)
@@ -197,10 +196,8 @@ class S3TokenizerV3(torch.nn.Module):
     @torch.inference_mode()
     def _quantize_mixed_batch(
             self, mel: torch.Tensor, mel_len: torch.Tensor,
-            long_audio_mask: torch.Tensor,
-            max_frames: int) -> Tuple[torch.Tensor, torch.Tensor]:
+            long_audio_mask: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
 
-        # Copy-paste from V2 because it relies on self.encoder which is V3 here
         batch_size = mel.size(0)
         sample_rate = 16000
         hop_length = 160
