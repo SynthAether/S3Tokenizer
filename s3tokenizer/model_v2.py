@@ -55,8 +55,8 @@ def apply_rotary_emb(
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     real = torch.view_as_real(freqs_cis)
     cos, sin = real[:, :, 0], real[:, :, 1]
-    cos = cos.unsqueeze(0).unsqueeze(2)
-    sin = sin.unsqueeze(0).unsqueeze(2)
+    cos = cos.unsqueeze(0).unsqueeze(2).to(xq.dtype)
+    sin = sin.unsqueeze(0).unsqueeze(2).to(xq.dtype)
 
     D = xq.shape[-1]
     half_l, half_r = xq[:, :, :, :D // 2], xq[:, :, :, D // 2:]
@@ -173,6 +173,7 @@ class FSMNMultiHeadAttention(MultiHeadAttention):
             (self.left_padding, self.right_padding), 0.0)
 
         self.use_sdpa = use_sdpa
+        self.key = Linear(n_state, n_state, bias=False)
 
     def forward_fsmn(self,
                      inputs: torch.Tensor,
@@ -264,7 +265,7 @@ class ResidualAttentionBlock(torch.nn.Module):
                                            n_head,
                                            kernel_size,
                                            use_sdpa=use_sdpa)
-        self.attn_ln = LayerNorm(n_state, eps=1e-6)
+        self.attn_ln = LayerNorm(n_state, eps=1e-5)
 
         n_mlp = n_state * 4
 

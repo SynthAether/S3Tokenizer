@@ -4,7 +4,7 @@
 
 import os
 import time
-from typing import Dict, Any
+from typing import Any, Dict
 
 import numpy as np
 import onnxruntime
@@ -271,7 +271,7 @@ def compare_torch_vs_onnx_single(model_name: str, audio: torch.Tensor,
 
 @pytest.mark.parametrize("model_name", [
     "speech_tokenizer_v1", "speech_tokenizer_v1_25hz",
-    "speech_tokenizer_v2_25hz"
+    "speech_tokenizer_v2_25hz", "speech_tokenizer_v3_25hz"
 ])
 def test_torch_vs_onnx_short_audio(model_name, test_audio_suite):
     """Test torch vs onnx for short audio (<=30s)"""
@@ -319,7 +319,7 @@ def test_torch_vs_onnx_short_audio(model_name, test_audio_suite):
 
 @pytest.mark.parametrize("model_name", [
     "speech_tokenizer_v1", "speech_tokenizer_v1_25hz",
-    "speech_tokenizer_v2_25hz"
+    "speech_tokenizer_v2_25hz", "speech_tokenizer_v3_25hz"
 ])
 def test_torch_vs_onnx_long_audio(model_name, test_audio_suite):
     """Test torch vs onnx for long audio (>30s) with ONNX sliding window implementation"""
